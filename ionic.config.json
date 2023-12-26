@@ -1,0 +1,7 @@
+{
+  "name": "zapatillastj",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
