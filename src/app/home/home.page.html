@@ -6,11 +6,13 @@
       Zapatillas TJ
     </ion-title>
     <ion-buttons slot="end"><ion-list>
-      <ion-item>
-        <ion-select aria-label="Tallas" placeholder="Talla">
-          <ion-select-option value="6">3mx, 6us, #23</ion-select-option>
-          <ion-select-option value="7">4mx, 7us, #24</ion-select-option>
-          <ion-select-option value="8">5mx, 8us, #25</ion-select-option>
+      <ion-item lines="none">
+        <ion-select interface="popover" value="{{size}}" aria-label="Tallas" placeholder="Talla" (ionChange)="onSizeSelect($event)">
+          <ion-select-option 
+          *ngFor="let s of sizes"
+          value="{{s?.value}}">
+            {{s?.text}}
+          </ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
@@ -18,15 +20,22 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
   <ion-grid [fixed]="true">
-    <p class="ion-padding-horizontal">Resultados > Todo
-      <span class="ion-float-right">estilo(s): {{products?.length||0}}</span>
-    </p>
+    <!-- <ion-item-divider> -->
+      <p class="ion-padding-horizontal">Resultados > {{(size||'Tallas')+' americano'}}
+        <span class="ion-float-right">estilo(s): {{filteredProducts?.length||0}}</span>
+      </p>
+    <!-- </ion-item-divider> -->
     <ion-row>
-      <ion-col *ngFor="let product of products" size="6" size-md="4" size-lg="2"  class="ion-padding">
+      <ion-col *ngFor="let product of filteredProducts" size="6" size-md="4" size-lg="2"  class="ion-padding">
         <ion-img class="ion-padding" style="height:200px" src="{{product?.photoURL || 'https://p1.hiclipart.com/preview/625/880/850/shoe-footwear-sandal-walking-line-silhouette-high-heels-blackandwhite-png-clipart.jpg'}}"></ion-img>
-        <ion-note style="font-weight: 700;">MXN{{product?.price || "..."}}</ion-note>
+        <!-- <ion-note style="font-weight: 700;"></ion-note> -->
+        <ion-button fill="outline" expand="block" color="success" [href]="sendWhatsApp(product)" target="_blank" rel="noopener noreferrer">
+          MXN{{product?.price || "..."}}
+          <ion-icon slot="end" name="logo-whatsapp"></ion-icon>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
