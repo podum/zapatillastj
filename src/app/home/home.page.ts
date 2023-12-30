@@ -102,7 +102,7 @@ export class HomePage {
       photoURL: "https://m.media-amazon.com/images/I/71oHHsHvAIL._AC_SY575_.jpg",
       price: 1500,
       sizes: [9,10],
-      name: "Incendios"
+      name: "Incendios '8"
     },
     {
       photoURL: "https://m.media-amazon.com/images/I/61VvAxzPpPS._AC_SY500_.jpg",
