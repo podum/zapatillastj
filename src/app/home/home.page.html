@@ -22,7 +22,7 @@
 
 
 <ion-content>
-  <ion-grid [fixed]="true">
+  <ion-grid [fixed]="true" style="min-height: 500px;">
     <!-- <ion-item-divider> -->
       <p class="ion-padding-horizontal">Resultados > {{(size||'Tallas')+' americano'}}
         <span class="ion-float-right">estilo(s): {{filteredProducts?.length||0}}</span>
@@ -32,14 +32,19 @@
       <ion-col *ngFor="let product of filteredProducts" size="6" size-md="4" size-lg="2"  class="ion-padding">
         <ion-img class="ion-padding" style="height:200px" src="{{product?.photoURL || 'https://p1.hiclipart.com/preview/625/880/850/shoe-footwear-sandal-walking-line-silhouette-high-heels-blackandwhite-png-clipart.jpg'}}"></ion-img>
         <!-- <ion-note style="font-weight: 700;"></ion-note> -->
-        <!-- <div class="ion-text-center">
-          <p>{{product?.name}}</p>
-          <p>
-            <span *ngFor="let s of product?.sizes">
-            {{s}}
-            </span>
-          </p>
-        </div> -->
+        <div class="ion-text-center">
+          <ion-label>{{product?.name}}</ion-label>
+          <br>
+          <ion-note>
+            Talla:
+            <span *ngIf="size==0">
+              <span *ngFor="let s of product?.sizes;  let last = last">
+                {{s}}<span *ngIf="!last">, </span>
+              </span>us
+            </span> 
+            <span *ngIf="size!=0">{{size}}</span>
+          </ion-note>
+        </div>
         <ion-button fill="outline" expand="block" color="success" [href]="sendWhatsApp(product)" target="_blank" rel="noopener noreferrer">
           MXN{{product?.price || "..."}}
           <ion-icon slot="end" name="logo-whatsapp"></ion-icon>
@@ -52,7 +57,7 @@
     <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
   </div> -->
   
-  <ion-toolbar class="ion-padding-horizontal" color="light">
+  <ion-toolbar class="ion-padding-horizontal ion-margin-top" color="light">
     <ion-row>
       <ion-col size="12">
         <p>Zapatillas TJ - Fundada en 2023</p>

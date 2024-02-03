@@ -60,7 +60,7 @@ export class HomePage {
       photoURL: "https://m.media-amazon.com/images/I/81mFi2+JPfL._AC_SY395_.jpg",
       price: 1000,
       sizes: [8],
-      name: "Transparentes con pedreria"
+      name: "Tira de pedreria"
     },
     {
       photoURL: "https://m.media-amazon.com/images/I/711ybzDQ1kL._AC_SY675_.jpg",
@@ -192,7 +192,7 @@ export class HomePage {
   sendWhatsApp(product: any): string {
     const message = `${product?.name} talla ${this.size||product?.sizes[0]} aun disponible?`;
     const encodedMessage = encodeURIComponent(message);
-    return `https://wa.me/526643282547?text=${encodedMessage}`;
+    return `https://wa.me/526648171162?text=${encodedMessage}`;
   }
 
 }
