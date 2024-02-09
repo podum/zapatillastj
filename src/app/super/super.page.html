@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Super User</ion-title>
+  </ion-toolbar>
+  <!-- <ion-button (click)="reWrite()">
+    Rewrite
+  </ion-button> -->
+</ion-header>
+
+<ion-content>
+  
+  <ion-card mode="ios" class="ion-padding">
+    <ion-list mode="ios">
+      <ion-item mode="ios">
+        <ion-thumbnail slot="start" mode="ios">
+          <img src="{{newPrd?.photoURL || 'https://p1.hiclipart.com/preview/625/880/850/shoe-footwear-sandal-walking-line-silhouette-high-heels-blackandwhite-png-clipart.jpg'}}" />
+        </ion-thumbnail>
+        <ion-input label="Photo" [(ngModel)]="newPrd.photoURL"></ion-input>
+      </ion-item>
+      <ion-item mode="ios">
+        <ion-input label="Name" [(ngModel)]="newPrd.name"></ion-input>
+      </ion-item>
+      <ion-item mode="ios">
+        <ion-input label="Price" [(ngModel)]="newPrd.price"></ion-input>
+      </ion-item>
+      <ion-item>
+        <div *ngFor="let size of sizes" class="ion-margin-end">
+          <ion-checkbox [(ngModel)]="size.checked" (ngModelChange)="updateSizes()">{{size?.size}}</ion-checkbox>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-button slot="end" (click)="add()">Add</ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-card *ngFor="let product of products; let i = index;" mode="ios" class="ion-padding">
+    <ion-list mode="ios">
+      <ion-item mode="ios">
+        <ion-thumbnail slot="start" mode="ios">
+          <img src="{{product?.photoURL || 'https://p1.hiclipart.com/preview/625/880/850/shoe-footwear-sandal-walking-line-silhouette-high-heels-blackandwhite-png-clipart.jpg'}}" />
+        </ion-thumbnail>
+        <ion-input label="Photo" [(ngModel)]="product.photoURL"></ion-input>
+        <ion-button slot="end" (click)="remove(product)"><ion-icon name="trash"></ion-icon></ion-button>
+      </ion-item>
+      <ion-item mode="ios">
+        <ion-input label="Name" [(ngModel)]="product.name"></ion-input>
+      </ion-item>
+      <ion-item mode="ios">
+        <ion-input label="Price" [(ngModel)]="product.price"></ion-input>
+      </ion-item>
+      <ion-item>
+        <div *ngFor="let sz of loadedSizes[i]?.sizes" class="ion-margin-end">
+          <ion-checkbox 
+          [(ngModel)]="sz.checked" 
+          (ngModelChange)="updateLoadedSizes(i)"
+          >{{sz?.size}}</ion-checkbox>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-button slot="end" (click)="update(product)">Update</ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>

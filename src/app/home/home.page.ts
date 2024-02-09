@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+import { Firestore, getDocs, doc, collection, writeBatch } from '@angular/fire/firestore';
+// import {
+//   Auth,
+//   GoogleAuthProvider,
+//   signInWithPopup,
+//   UserCredential
+// } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-home',
@@ -7,147 +14,143 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  products: any = [
-    {
-      photoURL: "https://m.media-amazon.com/images/I/81mwzQUVmxL._AC_SY535_.jpg",
-      price: 1800,
-      sizes: [6],
-      name: "Pedrerias '7"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/51rZYfM0zDL._AC_SX500_.jpg",
-      price: 1200,
-      sizes: [7],
-      name: "Botas bolsillas blancas"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/817LbQiQlpL._AC_SY395_.jpg",
-      price: 1800,
-      sizes: [11],
-      name: "Pedrerias '7"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/81JjHqIkEpL._AC_SY625_.jpg",
-      price: 1500,
-      sizes: [7],
-      name: "Goth negra"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/81OGmAtNVsL._AC_SY395_.jpg",
-      price: 1400,
-      sizes: [6, 9],
-      name: "Platformas negras"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/71NOHaAtHsL._AC_SY695_.jpg",
-      price: 1700,
-      sizes: [6],
-      name: "Terciopelos Muslos"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/61sFAQClBnL._AC_SY695_.jpg",
-      price: 1600,
-      sizes: [6],
-      name: "Botas rodillas negras"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/81yiWc3isfL._AC_SY535_.jpg",
-      price: 1500,
-      sizes: [5,6,11],
-      name: "Brillos negros"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/81mFi2+JPfL._AC_SY395_.jpg",
-      price: 1000,
-      sizes: [8],
-      name: "Tira de pedreria"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/711ybzDQ1kL._AC_SY675_.jpg",
-      price: 1500,
-      sizes: [6,7],
-      name: "Botas rosas"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/81vTSPiNoEL._AC_SY500_.jpg",
-      price: 700,
-      sizes: [6,8],
-      name: "Bajias con pedreria"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/819zhXBsT4L._AC_SY500_.jpg",
-      price: 600,
-      sizes: [6,10,11],
-      name: "Bajitas transparentes"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/71ruFREJDnL._AC_SY695_.jpg",
-      price: 1600,
-      sizes: [7,8],
-      name: "Piedras rosas"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/71WL1yBe7LL._AC_SX500_.jpg",
-      price: 1200,
-      sizes: [7,10],
-      name: "Negro con piedras"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/81Ve3R0qU-L._AC_SY500_.jpg",
-      price: 1600,
-      sizes: [7],
-      name: "Pedrerías '6"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/71oHHsHvAIL._AC_SY575_.jpg",
-      price: 1500,
-      sizes: [9,10],
-      name: "Incendios '8"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/61VvAxzPpPS._AC_SY500_.jpg",
-      price: 700,
-      sizes: [8],
-      name: "Oro y brazalete"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/7191sEUdqSL._AC_SY395_.jpg",
-      price: 1100,
-      sizes: [7],
-      name: "Borla pedrería"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/91-z35I6lbL._AC_SY535_.jpg",
-      price: 1000,
-      sizes: [8],
-      name: "Rejilla negro"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/81TAHoBw0eL._AC_SY625_.jpg",
-      price: 1200,
-      sizes: [8],
-      name: "Hojas arcoiris"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/81NBwfn0LkL._AC_SX500_.jpg",
-      price: 800,
-      sizes: [10],
-      name: "Arcoíris"
-    },
-    {
-      photoURL: "https://m.media-amazon.com/images/I/818j8kVbPeL._AC_SY535_.jpg",
-      price: 1500,
-      sizes: [10],
-      name: "Brillo dorado"
-    }/*,
-    {
-      photoURL: "",
-      price: 0,
-      sizes: [],
-      name: ""
-    }
-  */];
+  // products: any = [
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/81mwzQUVmxL._AC_SY535_.jpg",
+  //     price: 2100,
+  //     sizes: [6],
+  //     name: "Pedrerias '7"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/51rZYfM0zDL._AC_SX500_.jpg",
+  //     price: 900,
+  //     sizes: [7],
+  //     name: "Botas bolsillas blancas"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/817LbQiQlpL._AC_SY395_.jpg",
+  //     price: 2100,
+  //     sizes: [11],
+  //     name: "Pedrerias '7"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/81JjHqIkEpL._AC_SY625_.jpg",
+  //     price: 1200,
+  //     sizes: [7],
+  //     name: "Goth negra"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/81OGmAtNVsL._AC_SY395_.jpg",
+  //     price: 1400,
+  //     sizes: [6, 9],
+  //     name: "Platformas negras"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/71NOHaAtHsL._AC_SY695_.jpg",
+  //     price: 1700,
+  //     sizes: [6],
+  //     name: "Botas Terciopelos Muslos"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/81mFi2+JPfL._AC_SY395_.jpg",
+  //     price: 1000,
+  //     sizes: [8],
+  //     name: "Tira de pedreria"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/711ybzDQ1kL._AC_SY675_.jpg",
+  //     price: 1500,
+  //     sizes: [6,7],
+  //     name: "Botas rosas"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/81vTSPiNoEL._AC_SY500_.jpg",
+  //     price: 700,
+  //     sizes: [8],
+  //     name: "Bajitas con pedreria"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/819zhXBsT4L._AC_SY500_.jpg",
+  //     price: 600,
+  //     sizes: [6,10,11],
+  //     name: "Bajitas transparentes"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/71ruFREJDnL._AC_SY695_.jpg",
+  //     price: 1400,
+  //     sizes: [6,7,8],
+  //     name: "Piedras rosas"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/71WL1yBe7LL._AC_SX500_.jpg",
+  //     price: 1200,
+  //     sizes: [7,10],
+  //     name: "Negro con piedras"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/81Ve3R0qU-L._AC_SY500_.jpg",
+  //     price: 1600,
+  //     sizes: [7],
+  //     name: "Pedrerías '6"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/7191sEUdqSL._AC_SY395_.jpg",
+  //     price: 1100,
+  //     sizes: [7],
+  //     name: "Borla pedrería"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/91-z35I6lbL._AC_SY535_.jpg",
+  //     price: 1000,
+  //     sizes: [8],
+  //     name: "Rejilla negro"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/81TAHoBw0eL._AC_SY625_.jpg",
+  //     price: 1200,
+  //     sizes: [8],
+  //     name: "Hojas arcoiris"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/81NBwfn0LkL._AC_SX500_.jpg",
+  //     price: 800,
+  //     sizes: [10],
+  //     name: "Arcoíris"
+  //   },
+  //   {
+  //     category: "shoes",
+  //     photoURL: "https://m.media-amazon.com/images/I/818j8kVbPeL._AC_SY535_.jpg",
+  //     price: 1800,
+  //     sizes: [10],
+  //     name: "Brillo dorado"
+  //   }/*,
+  //   {
+  //     category: "shoes",
+  //     photoURL: "",
+  //     price: 0,
+  //     sizes: [],
+  //     name: ""
+  //   }
+  // */];
 
+  products: any = [];
   filteredProducts: any = [];
 
   sizes: any = [
@@ -163,8 +166,8 @@ export class HomePage {
 
   size: number = 0;
 
-  constructor() {
-    this.filteredProducts = this.filterProductsBySize();
+  constructor(private firestore: Firestore) {
+    this.loadProducts();
   }
   
   shuffleArray(array: any[]) {
@@ -179,7 +182,7 @@ export class HomePage {
   }
 
   filterProductsBySize() {
-    let p = this.products.filter((product: any) => product.sizes.includes(this.size));
+    let p = this.products.filter((product: any) => product.sizes[this.size] !== false);
     return (p.length != 0)?p:this.shuffleArray(this.products)
   }
 
@@ -194,5 +197,23 @@ export class HomePage {
     const encodedMessage = encodeURIComponent(message);
     return `https://wa.me/526648171162?text=${encodedMessage}`;
   }
+
+  async loadProducts() {    
+    const productsRef = collection(this.firestore, 'products');
+    const querySnap = await getDocs(productsRef);
+    querySnap.docs.forEach(async (p: any) => {
+      const prd = {
+        id: p.id,
+        ...p.data()
+      };
+      this.products.push(prd)
+    });
+    this.filteredProducts = this.filterProductsBySize();
+  }
+
+  // login(): Promise<UserCredential> {
+  //     return signInWithPopup(this._auth, new GoogleAuthProvider());
+  //   }
+  // }
 
 }

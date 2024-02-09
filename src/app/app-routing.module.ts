@@ -11,6 +11,10 @@ const routes: Routes = [
     redirectTo: '',
     pathMatch: 'full'
   },
+  {
+    path: 'super',
+    loadChildren: () => import('./super/super.module').then( m => m.SuperPageModule)
+  },
 ];
 
 @NgModule({
